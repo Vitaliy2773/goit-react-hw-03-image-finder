@@ -18,6 +18,7 @@ export default class App extends Component {
     isLoading: false,
     showModal: false,
     largeImageURL: '',
+    totalHits: 0,
   };
 
   componentDidMount() {
@@ -57,6 +58,7 @@ export default class App extends Component {
       .then(response => {
         this.setState(prevState => ({
           images: [...prevState.images, ...response.data.hits],
+          totalHits: response.data.totalHits,
           page: prevState.page + 1,
         }));
       })
@@ -85,14 +87,15 @@ export default class App extends Component {
   };
 
   render() {
-    const { images, isLoading, showModal, largeImageURL } = this.state;
+    const { images, isLoading, showModal, largeImageURL, totalHits } =
+      this.state;
 
     return (
       <div className={css.App}>
         <Searchbar onSubmit={this.onChangeQuery} />
         <ImageGallery images={images} onImageClick={this.handleImageClick} />
         {isLoading && <Loader />}
-        {images.length > 0 && !isLoading && (
+        {images.length > 0 && images.length < totalHits && !isLoading && (
           <Button onClick={this.fetchImages} />
         )}
         {showModal && (
