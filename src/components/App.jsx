@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import css from '../App.module.css';
 import axios from 'axios';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
@@ -37,16 +38,17 @@ class App extends Component {
     this.setState({
       searchQuery: query,
       page: 1,
+      per_page: 12,
       images: [],
     });
   };
 
   fetchImages = () => {
-    const { searchQuery, page } = this.state;
+    const { searchQuery, page, per_page } = this.state;
 
     const options = {
       method: 'GET',
-      url: `${BASE_URL}?q=${searchQuery}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`,
+      url: `${BASE_URL}?q=${searchQuery}&page=${page}&key=${API_KEY}&per_page=${per_page}`,
     };
 
     this.setState({ isLoading: true });
@@ -86,7 +88,7 @@ class App extends Component {
     const { images, isLoading, showModal, largeImageURL } = this.state;
 
     return (
-      <div>
+      <div className={css.App}>
         <Searchbar onSubmit={this.onChangeQuery} />
         <ImageGallery images={images} onImageClick={this.handleImageClick} />
         {isLoading && <Loader />}
