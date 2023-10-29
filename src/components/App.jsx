@@ -10,7 +10,7 @@ import Modal from './Modal/Modal';
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '39459893-bedb370270db67e1c0c9a6273';
 
-class App extends Component {
+export default class App extends Component {
   state = {
     images: [],
     searchQuery: '',
@@ -102,5 +102,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
